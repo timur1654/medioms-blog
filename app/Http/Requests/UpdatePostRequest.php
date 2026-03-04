@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdatePostRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'title' => 'required|min:3',
+            'slug' => 'nullable',
+            'excerpt' => 'required|max:100',
+            'body' => 'required',
+            'is_published' => 'nullable',
+            'published_at' => 'nullable',
+            'user_id' => 'nullable',
+            'image' => 'nullable|max:2048',
+            'remove_image' => 'sometimes|boolean'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'required' => 'Это поле обязательно для заполнения',
+          'image' => 'Должно быть изображение'
+        ];
+    }
+}
